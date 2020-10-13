@@ -4,7 +4,8 @@
 const functions = require('firebase-functions');
 const database = require('./handlers/database_handler');
 const mail = require('./handlers/mail_handler');
-const cryptr = require('./handlers/cryptr_handler')
+const cryptr = require('./handlers/cryptr_handler');
+const axios = require('axios');
 
 // handlers
 const mail_handler = new mail();
@@ -62,4 +63,62 @@ exports.sendEmailConfirmation = functions.firestore.document('/users/{userId}/se
 
   // update the segment in firebase
   database_handler.update(pathToSegment, segmentObject);
+});
+
+exports.conversationResults = functions.firestore.document('/users/{userId}').onWrite(async (change, context) => {
+  
+  const before = change.before;
+  const after = change.after;
+  const beforeData = before.data();
+  const afterData = after.data();
+  const deleteEvent = "google.firestore.document.delete";
+
+  if(context.eventType === deleteEvent || JSON.stringify(beforeData.badgets) === JSON.stringify(afterData.badgets)) {
+    return;
+  }
+
+  const user = await database_handler.getDocument('users', context.params.userId);
+  const url = "https://us-central1-just-talk-2021.cloudfunctions.net/matchNotification"
+  const body = {
+    "user_type": user.user_type,
+    "birthdate": user.birthdate,
+    "topics_talk": [
+        "COVID",
+        "Clasicas de cachimbos"
+    ],
+    "topics_hear": user.topics_hear,
+    "segments": [
+        "upc.edu.pe"
+    ],
+    "user_type_qualified_user": "premium",
+    "date_birth_qualified_user": "21/05/1993",
+    "topics_talk_qualified_user": [
+        "COVID",
+        "Clasicas de cachimbos"
+    ],
+    "topics_hear_qualified_user": [
+        "viajes a cuzco"
+    ],
+    "segments_qualified_user": [
+        "upc.edu.pe"
+    ],
+    "start_time": "19/09/2020 17:00:00",
+    "end_end": "19/09/2020 17:05:00",
+    "badges_awarded": [
+        "divertido"
+    ]
+  }
+  
+  await axios.post(url, body)
+        .then(response => console.log(response.data.data))
+        .catch(error => console.log(error))
+})
+
+exports.matchNotification = functions.https.onRequest((request, response) => {
+  if (request.method === 'POST') {
+    return response.status(200).json({message: 'Post request', data: request.body})
+  }
+  if (request.method === 'GET') {
+    return response.status(200).json({message: 'Get worked'})
+  }
 });
