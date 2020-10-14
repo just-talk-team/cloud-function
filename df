@@ -1,0 +1,23 @@
+[33mcommit 6c11439f3bbcada2ae9957a0172662076f978a37[m[33m ([m[1;36mHEAD -> [m[1;32mfeature/HU-22_TASK-01[m[33m, [m[1;32mmaster[m[33m, [m[1;32mfeature/HU-07_TASK-01-02[m[33m)[m
+Author: Adrian Crespo Ames <Adrian_Ames@outlook.com>
+Date:   Tue Oct 13 17:47:42 2020 -0500
+
+    Investigacion post
+
+[33mcommit d78e39780ef84b7c4b5b2c703e9721991203b1f7[m[33m ([m[1;31morigin/feature/HU-07_TASK-01-02[m[33m)[m
+Author: Adrian Crespo Ames <Adrian_Ames@outlook.com>
+Date:   Thu Oct 1 00:34:48 2020 -0500
+
+    Implementación de funcionalidades para verificación de segmento
+
+[33mcommit 4f89ab0b938f5fdea3ad6c3a90e20e9f928c5123[m[33m ([m[1;31morigin/master[m[33m)[m
+Author: Adrian Crespo Ames <Adrian_Ames@outlook.com>
+Date:   Wed Sep 30 07:47:34 2020 -0500
+
+    Funciones para validación de segmento
+
+[33mcommit e9146397a526c3642f9cf02f671be91ca8a5d537[m
+Author: Adrian Crespo Ames <Adrian_Ames@outlook.com>
+Date:   Mon Sep 28 20:25:59 2020 -0500
+
+    Inicialización del proyecto firebase
