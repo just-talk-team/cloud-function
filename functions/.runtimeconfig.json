@@ -1,9 +1,0 @@
-{
-  "gmail": {
-    "password": "zvdoymeeucflsgxw",
-    "email": "just.talk.team.2021@gmail.com"
-  },
-  "apis": {
-    "confirm_segment_function": "http://localhost:5001/just-talk-2021/us-central1/confirmSegment"
-  }
-}
