@@ -17,7 +17,7 @@ jobs:
         with:
           node-version: 12
       - name: Change to functions directory
-        script: cd functions/
+        run: cd functions/
       - name: Install Dependencies
         run: npm ci
   deploy:
