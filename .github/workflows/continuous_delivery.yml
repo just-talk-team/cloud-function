@@ -19,7 +19,7 @@ jobs:
       - name: Install Dependencies
         run: npm ci
         working-directory: ./functions
-      - name: Deploy to Firebase
+      - name: Deploy to Firebase Development Project
         uses: w9jds/firebase-action@master
         with:
           args: deploy --only functions --project=${{ secrets.FIREBASE_ALIAS_DEVELOPMENT }}
