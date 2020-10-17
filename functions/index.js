@@ -2,27 +2,33 @@
 
 // import modules
 const functions = require('firebase-functions');
-const service = require('../service/cloud_service')
+const admin = require('firebase-admin');
+const apiController = require('./controller/ApiController');
+const eventController = require('./controller/EventController');
+
+// initialize the app
+admin.initializeApp();
 
 // initialize service
-const cloud_service = new service();
+const apiControllerObject = new apiController();
+const eventControllerObject = new eventController();
 
 // validates the segment that a user added
 exports.confirmSegment = functions.https.onRequest((request, response) => {
-  cloud_service.confirmSegment(request, response);
+  apiControllerObject.confirmSegment(request, response);
 });
 
 // sends a confirmation email when a user adds a segment
 exports.sendEmailConfirmation = functions.firestore.document('/users/{userId}/segments/{segmentId}').onCreate(async (snap, context) => {
-  await cloud_service.sendEmailConfirmation(snap, context);
+  await eventControllerObject.sendEmailConfirmation(snap, context);
 });
 
 // get the results from a conversation after it finishes
 exports.conversationResults = functions.firestore.document('/chats/{chatId}/results/{resultId}').onCreate(async (snap, context) => {
-  await cloud_service.conversationResults(snap, context);
+  await eventControllerObject.conversationResults(snap, context);
 })
 
 // notify the user about a new match
 exports.matchNotification = functions.https.onRequest((request, response) => {
-  return cloud_service.matchNotification(request, response);
+  return apiControllerObject.matchNotification(request, response);
 });
