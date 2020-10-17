@@ -6,18 +6,27 @@ on:
       - "**"
 
 jobs:
-  deploy:
-    name: Delivery
+  build:
+    name: Build
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v2
       - name: Setup Node JS
-        uses: actions/setup-node@v1/functions
+        uses: actions/setup-node@v1
         with:
           node-version: 12
-      - run: npm ci
-      - run: npm run build
+      - name: Change to functions directory
+        script: cd functions/
+      - name: Install Dependencies
+        run: npm ci
+  deploy:
+    name: Delivery
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v2
       - name: Deploy to Firebase
         uses: w9jds/firebase-action@v1
         with:
