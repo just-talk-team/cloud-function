@@ -6,8 +6,8 @@ on:
       - "**"
 
 jobs:
-  build:
-    name: Build
+  deploy:
+    name: Delivery
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repo
@@ -19,13 +19,6 @@ jobs:
       - name: Install Dependencies
         run: npm install
         working-directory: ./functions
-  deploy:
-    name: Delivery
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Repo
-        uses: actions/checkout@v2
       - name: Deploy to Firebase
         uses: w9jds/firebase-action@master
         with:
