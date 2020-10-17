@@ -4,7 +4,6 @@ const admin = require('firebase-admin');
 
 class Database {
     constructor() {
-        admin.initializeApp();
         this.database = admin.firestore();
     }
 
