@@ -18,8 +18,8 @@ exports.sendEmailConfirmation = functions.firestore.document('/users/{userId}/se
 });
 
 // get the results from a conversation after it finishes
-exports.conversationResults = functions.firestore.document('/chats/{chatId}/information/duration').onUpdate(async (change, context) => {
-  await cloud_service.conversationResults(change, context);
+exports.conversationResults = functions.firestore.document('/chats/{chatId}/results/{resultId}').onCreate(async (snap, context) => {
+  await cloud_service.conversationResults(snap, context);
 })
 
 // notify the user about a new match

@@ -65,9 +65,8 @@ class CloudService {
         this.database_handler.update(pathToSegment, segmentObject);
     }
     
-    async conversationResults(change, context) {
-        const after = change.after;
-        const afterData = after.data();
+    async conversationResults(snap, context) {
+        const snapData = snap.data();
         const chatId = context.params.chatId;
     
         const userIdString = JSON.stringify(chatId).split("_")[0];
@@ -77,7 +76,6 @@ class CloudService {
         const qualifiedId = qualifiedIdString.substring(0, qualifiedIdString.length-1);
         const userPath = 'users/'+userId;
         const qualifiedPath = 'users/'+qualifiedId;
-        const badgesAwardedPath = 'chats/'+chatId+'/badges/'+userId;
     
         const user = await this.database_handler.getDocument(userPath);
         const qualified = await this.database_handler.getDocument(qualifiedPath);
@@ -85,27 +83,26 @@ class CloudService {
         const qualifiedSegments = await this.database_handler.getFromUser('segments', qualifiedId);
         const userTopicsTalk = await this.database_handler.getFromUser('topics_talk', userId);
         const qualifiedTopicsTalk = await this.database_handler.getFromUser('topics_talk', qualifiedId);
-        const badgesAwarded = await this.database_handler.getDocument(badgesAwardedPath);
     
     
-        const url = "https://us-central1-just-talk-2021.cloudfunctions.net/matchNotification"
+        const apiDashboard = functions.config().apis.api_dashboard;
         const body = {
             "user_type": user.user_type,
-            "birthdate": user.birthday,
+            "birthdate": user.birthdate,
             "topics_hear": user.topics_hear,
             "topics_talk": userTopicsTalk,
             "segments": userSegments,
             "user_type_qualified": qualified.user_type,
-            "birthdate_qualified": qualified.birthday,
+            "birthdate_qualified": qualified.birthdate,
             "topics_talk_qualified": qualifiedTopicsTalk,
             "topics_hear_qualified": qualified.topics_hear,
             "segments_qualified": qualifiedSegments,
-            "start_time": afterData.start_time,
-            "end_time": afterData.end_time,
-            "badges_awarded": badgesAwarded.badges
+            "start_time": snapData.start_time,
+            "end_time": snapData.end_time,
+            "badges_awarded": snapData.badges
         }
         
-        await axios.post(url, body)
+        await axios.post(apiDashboard, body)
                 .then(response => console.log(response.data.data))
                 .catch(error => console.log(error))
     }
