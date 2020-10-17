@@ -27,7 +27,7 @@ jobs:
       - name: Checkout Repo
         uses: actions/checkout@v2
       - name: Deploy to Firebase
-        uses: w9jds/firebase-action@v1
+        uses: w9jds/firebase-action@master
         with:
           args: deploy --only functions --project=${{ secrets.FIREBASE_ALIAS_DEVELOPMENT }}
         env:
