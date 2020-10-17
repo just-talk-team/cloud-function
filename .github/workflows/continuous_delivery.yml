@@ -16,9 +16,8 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 12
-      - name: Change to functions directory
-        run: cd functions/
       - name: Install Dependencies
+        run: cd functions/
         run: npm ci
   deploy:
     name: Delivery
