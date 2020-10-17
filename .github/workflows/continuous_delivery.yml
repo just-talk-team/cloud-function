@@ -17,8 +17,8 @@ jobs:
         with:
           node-version: 12
       - name: Install Dependencies
-        run: cd functions/
         run: npm ci
+        working-directory: ./functions
   deploy:
     name: Delivery
     needs: build
