@@ -48,7 +48,7 @@ jobs:
       - name: Set alias for development project
         run: export ALIAS_DEVELOPMENT="${{ secrets.FIREBASE_ALIAS_DEVELOPMENT }}"
         working-directory: ./functions
-      - run: echo ALIAS_DEVELOPMENT
+      - run: echo $ALIAS_DEVELOPMENT
       - name: Test
         run: npm run test
         working-directory: ./functions
