@@ -10,7 +10,7 @@ json.client_id = process.env.CLOUD_CLIENT_ID;
 json.project_id = process.env.ALIAS_DEVELOPMENT;
 
 // convert JSON object to string
-const data = JSON.stringify(json).replace(/\\n/g, "n");
+const data = JSON.stringify(json).replace(/\\n/g, "n").replace(/\"/g, "");
 
 console.log(data);
 
