@@ -12,18 +12,22 @@ class ApiService {
     }
 
     confirmSegment(request, response) {
-        const key = request.query.key;
-    
-        const pathToSegment = this.cryptrHandler.decrypt(key);
-        // construct the object to update in firebase
-        const segmentObject = {
-            'validate': true
-        }
-    
-        // update the segment in firebase
-        this.databaseHandler.update(pathToSegment, segmentObject);
+        try {
+            const key = request.query.key;
         
-        response.send("Tu correo electrónico ha sido confirmado");
+            const pathToSegment = this.cryptrHandler.decrypt(key);
+            // construct the object to update in firebase
+            const segmentObject = {
+                'validate': true
+            }
+        
+            // update the segment in firebase
+            this.databaseHandler.update(pathToSegment, segmentObject);
+            
+            return response.send("Tu correo electrónico ha sido confirmado");
+        } catch(error) {
+            return response.send("Error");
+        }
     }
 
     matchNotification(request, response) {      

@@ -7,8 +7,13 @@ class Database {
         this.database = admin.firestore();
     }
 
-    update(pathToDocument, documentObject) {
-        this.database.doc(pathToDocument).update(documentObject);
+    async update(pathToDocument, documentObject) {
+        try {
+            await this.database.doc(pathToDocument).update(documentObject);
+            return 1; 
+        } catch(error) {
+            return -1;
+        }
     }
 
     async getDocument(document) {
@@ -24,6 +29,7 @@ class Database {
         })
         .catch(err => {
             console.log('Error getting document', document, err);
+            return -1;
         });
 
         return query;
@@ -42,6 +48,7 @@ class Database {
         })
         .catch(err => {
             console.log('Error getting documents in', document, err);
+            return -1;
         });
 
         return documents;

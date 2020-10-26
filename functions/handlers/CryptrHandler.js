@@ -6,11 +6,21 @@ class Cryptr {
     }
     
     encrypt(text) {
-        return this.handler.encrypt(text);
+        try {
+            return this.handler.encrypt(text);
+        } catch(error) {
+            console.error('There was an error while encrypting: ', text, error);
+            return -1;
+        }
     }
        
     decrypt(text) {
-        return this.handler.decrypt(text);
+        try {
+            return this.handler.decrypt(text);
+        } catch(error) {
+            console.error('There was an error while decrypting: ', text, error);
+            return -1;
+        }
     }
 }
 

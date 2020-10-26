@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - master
+      - feature/HU-07_TASK-03-04
   pull_request:
     branches:
       - "**"
@@ -21,9 +22,28 @@ jobs:
       - name: Install Dependencies
         run: npm ci
         working-directory: ./functions
+      - name: Set gmail email variable
+        run: export GMAIL_EMAIL=${{ secrets.FIREBASE_CONFIG_GMAIL_EMAIL }}
+      - name: Set gmail password variable
+        run: export GMAIL_PASSWORD=${{ secrets.FIREBASE_CONFIG_GMAIL_PASSWORD }}
+      - name: Set api confirmation segment function variable
+        run: export APIS_CONFIRM_SEGMENT_FUNCTION=${{ secrets.FIREBASE_CONFIG_APIS_CONFIRM_SEGMENT_FUNCTION }}
+      - name: Set api dashboard variable
+        run: export APIS_API_DASHBOARD=${{ secrets.FIREBASE_CONFIG_APIS_API_DASHBOARD }}
+      - name: Set cloud private key id
+        run: export CLOUD_PRIVATE_KEY_ID=${{ secrets.FIREBASE_CLOUD_PRIVATE_KEY_ID }}
+      - name: Set cloud private key
+        run: export CLOUD_PRIVATE_KEY=${{ secrets.FIREBASE_CLOUD_PRIVATE_KEY }}
+      - name: Set cloud client email
+        run: export CLOUD_CLIENT_EMAIL=${{ secrets.FIREBASE_CLOUD_CLIENT_EMAIL }}
+      - name: Set cloud client id
+        run: export CLOUD_CLIENT_ID=${{ secrets.FIREBASE_CLOUD_CLIENT_ID }}
+      - name: Set alias for development project
+        run: export ALIAS_DEVELOPMENT=${{ secrets.FIREBASE_ALIAS_DEVELOPMENT }}
       - name: Test
         run: npm run test
         working-directory: ./functions
+    if: ${{ github.ref == 'feature/HU-07_TASK-03-04' }}
 
   Continuos-Delivery:
     name: Continuos-Delivery
