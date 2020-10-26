@@ -32,7 +32,7 @@ jobs:
       - name: Set cloud private key id
         run: export CLOUD_PRIVATE_KEY_ID=${{ secrets.FIREBASE_CLOUD_PRIVATE_KEY_ID }}
       - name: Set cloud private key
-        run: export CLOUD_PRIVATE_KEY=${{ secrets.FIREBASE_CLOUD_PRIVATE_KEY }}
+        run: export CLOUD_PRIVATE_KEY="${{ secrets.FIREBASE_CLOUD_PRIVATE_KEY }}"
       - name: Set cloud client email
         run: export CLOUD_CLIENT_EMAIL=${{ secrets.FIREBASE_CLOUD_CLIENT_EMAIL }}
       - name: Set cloud client id
