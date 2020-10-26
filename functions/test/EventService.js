@@ -1,29 +1,7 @@
-'use strict'
-
-// defining test environment
-const test = require('firebase-functions-test')({
-    databaseURL: 'https://just-talk-dev.firebaseio.com',
-    storageBucket: 'just-talk-dev.appspot.com',
-    projectId: 'just-talk-dev',
-}, './service-account-dev.json');
-
 // import modules for testing
 const admin = require('firebase-admin');
 const eventService = require('../service/EventService');
 const assert = require('assert');
-
-test.mockConfig(
-    {
-        "gmail": {
-            "password": process.env.GMAIL_PASSWORD,
-            "email": process.env.GMAIL_EMAIL
-        },
-        "apis": {
-            "confirm_segment_function": process.env.APIS_CONFIRM_SEGMENT_FUNCTION,
-            "api_dashboard": process.env.APIS_API_DASHBOARD
-        }
-    }
-);
 
 // tesing EventService
 describe("EventService", async function() {

@@ -12,6 +12,8 @@ json.project_id = process.env.ALIAS_DEVELOPMENT;
 // convert JSON object to string
 const data = JSON.stringify(json).replace(/\\n/g, "n");
 
+console.log(data);
+
 // write JSON string to a file
 fs.writeFileSync('./service-account-dev.json', data, (err) => {
     if (err) {
