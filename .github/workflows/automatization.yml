@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - master
-      - feature/HU-07_TASK-03-04
   pull_request:
     branches:
       - "**"
