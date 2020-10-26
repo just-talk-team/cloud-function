@@ -43,7 +43,6 @@ jobs:
       - name: Test
         run: npm run test
         working-directory: ./functions
-    if: ${{ github.ref == 'feature/HU-07_TASK-03-04' }}
 
   Continuos-Delivery:
     name: Continuos-Delivery
