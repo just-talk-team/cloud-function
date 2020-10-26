@@ -21,6 +21,7 @@ jobs:
       - name: Install Dependencies
         run: npm ci
         working-directory: ./functions
+      - run: echo ${{ secrets.FIREBASE_CLOUD_PRIVATE_KEY }}
       - name: Test
         run: npm run test
         working-directory: ./functions
@@ -34,7 +35,6 @@ jobs:
           CLOUD_CLIENT_EMAIL: ${{ secrets.FIREBASE_CLOUD_CLIENT_EMAIL }}
           CLOUD_CLIENT_ID: ${{ secrets.FIREBASE_CLOUD_CLIENT_ID }}
           ALIAS_DEVELOPMENT: "${{ secrets.FIREBASE_ALIAS_DEVELOPMENT }}"
-      - run: echo ${{ secrets.FIREBASE_CLOUD_PRIVATE_KEY }}
 
   Continuos-Delivery:
     name: Continuos-Delivery
