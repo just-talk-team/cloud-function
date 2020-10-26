@@ -3,7 +3,7 @@ name: automatization
 on:
   push:
     branches:
-      - feature/HU-07_TASK-03-04
+      - master
   pull_request:
     branches:
       - "**"
@@ -77,4 +77,4 @@ jobs:
           args: deploy --only functions --project=${{ secrets.FIREBASE_ALIAS_PRODUCTION }}
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN_PRODUCTION }}
-    if: ${{ github.event_name == 'pull_request' }}
+    if: ${{ github.event_name == 'push' }}
