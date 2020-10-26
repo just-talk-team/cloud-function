@@ -46,7 +46,7 @@ jobs:
         run: export CLOUD_CLIENT_ID=${{ secrets.FIREBASE_CLOUD_CLIENT_ID }}
         working-directory: ./functions
       - name: Set alias for development project
-        run: export ALIAS_DEVELOPMENT=${{ secrets.FIREBASE_ALIAS_DEVELOPMENT }}
+        run: export ALIAS_DEVELOPMENT="${{ secrets.FIREBASE_ALIAS_DEVELOPMENT }}"
         working-directory: ./functions
       - name: Test
         run: npm run test
