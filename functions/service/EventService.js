@@ -6,6 +6,7 @@ const database = require('../handlers/DatabaseHandler');
 const mail = require('../handlers/MailHandler');
 const cryptr = require('../handlers/CryptrHandler');
 const axios = require('axios');
+const admin = require('firebase-admin')
 
 class EventService {
     constructor() {
@@ -57,7 +58,6 @@ class EventService {
     
     async conversationResults(snap, context) {
         try {
-
             const snapData = snap.data();
             const chatId = context.params.chatId;
         
@@ -75,19 +75,20 @@ class EventService {
             const qualifiedSegments = await this.databaseHandler.getFromUser('segments', qualifiedId);
             const userTopicsTalk = await this.databaseHandler.getFromUser('topics_talk', userId);
             const qualifiedTopicsTalk = await this.databaseHandler.getFromUser('topics_talk', qualifiedId);
-        
+            const userTopicsHear = await this.databaseHandler.getFromUser('topics_hear', userId);
+            const qualifiedTopicsHear = await this.databaseHandler.getFromUser('topics_hear', qualifiedId);
         
             const apiDashboard = functions.config().apis.api_dashboard;
             const body = {
                 "user_type": user.user_type,
                 "birthdate": user.birthdate,
-                "topics_hear": user.topics_hear,
+                "topics_hear": userTopicsHear,
                 "topics_talk": userTopicsTalk,
                 "segments": userSegments,
                 "user_type_qualified": qualified.user_type,
                 "birthdate_qualified": qualified.birthdate,
                 "topics_talk_qualified": qualifiedTopicsTalk,
-                "topics_hear_qualified": qualified.topics_hear,
+                "topics_hear_qualified": qualifiedTopicsHear,
                 "segments_qualified": qualifiedSegments,
                 "start_time": snapData.start_time,
                 "end_time": snapData.end_time,
@@ -97,6 +98,51 @@ class EventService {
             await axios.post(apiDashboard, body)
                     .then(response => console.log(response.data.data))
                     .catch(error => console.log(error))
+            return 1;
+        } catch(error) {
+            return -1;
+        }
+    }
+
+    async matchRequest(snap, context) {
+        try {
+            const topicName = context.params.topicName;
+            const userId = context.params.userId;
+
+            const userPath = 'users/'+userId;
+
+            const user = await this.databaseHandler.getDocument(userPath);
+            const segments = user.preferences.segments;
+
+            for (let segment of segments) {
+                const pathToSegment = `/segments/${segment}/topics/${topicName}`;
+                const segmentObject = {
+                    'time': new Date()
+                }
+                this.databaseHandler.write(pathToSegment, segmentObject);
+            }
+
+            const userSegments = await this.databaseHandler.getFromUser('segments', userId);
+            const userBadges = await this.databaseHandler.getFromUser('badges', userId);
+            const userTopicsTalk = await this.databaseHandler.getFromUser('topics_talk', userId);
+            const userTopicsHear = await this.databaseHandler.getFromUser('topics_hear', userId);
+        
+            const apiMatchRequest = functions.config().apis.match_request;
+            const body = {
+                "id": userId,
+                "birthdate": user.birthdate,
+                "gender": user.gender,
+                "user_type": user.user_type,
+                "segments": userSegments,
+                "badges": userBadges,
+                "preferences": user.preferences,
+                "topics_hear": userTopicsHear,
+                "topics_talk": userTopicsTalk
+            }
+
+            await axios.post(apiMatchRequest, body)
+                .then(response => console.log(response.data.data))
+                .catch(error => console.log(error))
             return 1;
         } catch(error) {
             return -1;

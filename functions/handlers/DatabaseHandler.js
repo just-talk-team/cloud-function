@@ -16,6 +16,15 @@ class Database {
         }
     }
 
+    async write(pathToDocument, documentObject) {
+        try {
+            await this.database.doc(pathToDocument).set(documentObject);
+            return 1; 
+        } catch(error) {
+            return -1;
+        }
+    }
+
     async getDocument(document) {
         const docRef = this.database.doc(document);
 

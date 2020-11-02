@@ -32,3 +32,8 @@ exports.conversationResults = functions.firestore.document('/chats/{chatId}/resu
 exports.matchNotification = functions.https.onRequest((request, response) => {
   return apiControllerObject.matchNotification(request, response);
 });
+
+// request a new match to the api
+exports.matchRequest = functions.firestore.document('/users/{userId}/topics_hear/{topicName}').onCreate(async (snap, context) => {
+  await eventControllerObject.matchRequest(snap, context);
+})

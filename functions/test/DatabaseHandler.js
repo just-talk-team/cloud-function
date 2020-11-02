@@ -20,6 +20,14 @@ describe("DatabaseHandler", async function() {
         const updateResult = await databaseHandler.update(pathToDocument, documentObject);
         assert.strictEqual(updateResult, 1, `No se actualizo el documento correctamente`);
     });
+    it(`Escenario: Cuando se desee crear o actualizar un documento`, async function () {
+        const pathToDocument = 'segments/test/topics/any';
+        const documentObject = {
+            'time': new Date(),
+        };
+        const writeResult = await databaseHandler.write(pathToDocument, documentObject);
+        assert.strictEqual(writeResult, 1, `No se escribio el documento correctamente`);
+    });
     it(`Escenario: Cuando se desee obtener un documento`, async function() {
         const document = 'users/2644mam0AFWcOOWpvc0QuoIOXv72';
         const documentQueryResult = await databaseHandler.getDocument(document);

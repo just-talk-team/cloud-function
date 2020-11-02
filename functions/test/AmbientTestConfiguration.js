@@ -35,7 +35,8 @@ test.mockConfig(
         },
         "apis": {
             "confirm_segment_function": process.env.APIS_CONFIRM_SEGMENT_FUNCTION,
-            "api_dashboard": process.env.APIS_API_DASHBOARD
+            "api_dashboard": process.env.APIS_API_DASHBOARD,
+            "match_request": process.env.APIS_MATCH_REQUEST
         }
     }
 );

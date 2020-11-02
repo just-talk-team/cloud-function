@@ -16,6 +16,10 @@ class EventController {
     async conversationResults(snap, context) {
         this.eventServiceObject.conversationResults(snap, context);
     }
+
+    async matchRequest(snap, context) {
+        this.eventServiceObject.matchRequest(snap, context);
+    }
 }
 
 module.exports = EventController;
