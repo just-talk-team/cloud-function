@@ -41,5 +41,16 @@ describe("EventService", async function() {
         const functionResult = await eventServiceObject.conversationResults(snap, context);
         assert.strictEqual(functionResult, 1, `No se enviaron los resultados correctamente`);
     });
+    it(`Escenario: Cuando se desea hacer una peticion de emparejamiento`, async function () {
+        const snap = {}
+        const context = {
+            'params': {
+                'userId': '1kimc79FxJp4v5xLgy4D',
+                'topicName': 'Marvel'
+            }
+        }
+        const functionResult = await eventServiceObject.matchRequest(snap, context);
+        assert.strictEqual(functionResult, 1, `No se realizo la peticion correctamente`);
+    });
     admin.app().delete();
 });
