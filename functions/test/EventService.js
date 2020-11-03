@@ -7,7 +7,7 @@ const assert = require('assert');
 describe("EventService", async function() {
     admin.initializeApp();
     const eventServiceObject = new eventService();
-    this.timeout(5000);
+    this.timeout(10000);
     it(`Escenario: Cuando se desea enviar un email de confirmacion`, async function () {
         const snap = {
             'data': function() {
@@ -35,7 +35,7 @@ describe("EventService", async function() {
         }
         const context = {
             'params': {
-                'chatId': '2644mam0AFWcOOWpvc0QuoIOXv72_1kimc79FxJp4v5xLgy4D',
+                'chatId': '2644mam0AFWcOOWpvc0QuoIOXv72_1kimc79FxJp4v5xLgy4D'
             }
         }
         const functionResult = await eventServiceObject.conversationResults(snap, context);

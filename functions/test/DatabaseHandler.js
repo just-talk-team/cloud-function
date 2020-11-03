@@ -7,7 +7,7 @@ const assert = require('assert');
 describe("DatabaseHandler", async function() {
     admin.initializeApp();
     const databaseHandler = new database();
-    this.timeout(5000);
+    this.timeout(10000);
     it(`Escenario: Cuando se desee actualizar un documento`, async function () {
         const pathToDocument = 'users/2644mam0AFWcOOWpvc0QuoIOXv72';
         const documentObject = {

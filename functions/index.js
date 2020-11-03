@@ -37,3 +37,8 @@ exports.matchNotification = functions.https.onRequest((request, response) => {
 exports.matchRequest = functions.firestore.document('/users/{userId}/topics_hear/{topicName}').onCreate(async (snap, context) => {
   await eventControllerObject.matchRequest(snap, context);
 })
+
+// register a new discovery into the database
+exports.registerDiscovery = functions.https.onRequest(async (request, response) => {
+  await apiControllerObject.registerDiscovery(request, response);
+})

@@ -18,7 +18,7 @@ class EventController {
     }
 
     async matchRequest(snap, context) {
-        this.eventServiceObject.matchRequest(snap, context);
+        await this.eventServiceObject.matchRequest(snap, context);
     }
 }
 

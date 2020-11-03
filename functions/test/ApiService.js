@@ -32,5 +32,25 @@ describe("ApiService", function() {
         const functionResult = 1;
         assert.strictEqual(functionResult, 1, `No se notifico correctamente`);
     });
+    it(`Escenario: Cuando se realice un nuevo descubrimiento`, async function () {
+        this.timeout(10000);
+        const request = {
+            'body': {
+                'idFirstPerson': '1kimc79FxJp4v5xLgy4D',
+                'idSecondPerson': '2644mam0AFWcOOWpvc0QuoIOXv72'
+            }
+        }
+        const response = {
+            'status': function(code){
+                return {
+                    'json': function(object) {
+                        return code
+                    }
+                }
+            }
+        }
+        const functionResult = await apiServiceObject.registerDiscovery(request, response);
+        assert.strictEqual(functionResult, 200, `No se notifico correctamente`);
+    });
     admin.app().delete();
 });

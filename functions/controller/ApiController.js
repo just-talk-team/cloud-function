@@ -16,6 +16,10 @@ class ApiController {
     matchNotification(request, response) {      
         return this.apiServiceObject.matchNotification(request, response);
     }
+
+    async registerDiscovery(request, response) {
+        return await this.apiServiceObject.registerDiscovery(request, response);
+    }
 }
 
 module.exports = ApiController;
