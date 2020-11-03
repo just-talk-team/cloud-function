@@ -5,7 +5,7 @@ const assert = require('assert');
 // tesing MailHandler
 describe("MailHandler", async function() {
     const mailHandler = new mail();
-    this.timeout(5000);
+    this.timeout(10000);
     it(`Escenario: Cuando se desee enviar un correo electronico`, async function () {
         const mailOptions = {
             from: '"Just Talk." <just.talk.team.2021@gmail.com>',
