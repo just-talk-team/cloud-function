@@ -61,15 +61,22 @@ class EventService {
     try {
       const snapData = snap.data();
       const chatId = context.params.chatId;
+      const resultId = context.params.resultId;
 
       const userIdString = JSON.stringify(chatId).split("_")[0];
       const qualifiedIdString = JSON.stringify(chatId).split("_")[1];
 
-      const userId = userIdString.substring(1, userIdString.length);
-      const qualifiedId = qualifiedIdString.substring(
+      var userId = userIdString.substring(1, userIdString.length);
+      var qualifiedId = qualifiedIdString.substring(
         0,
         qualifiedIdString.length - 1
       );
+
+      if (qualifiedId === resultId) {
+        qualifiedId = userId
+        userId = resultId
+      }
+
       const userPath = "users/" + userId;
       const qualifiedPath = "users/" + qualifiedId;
 
