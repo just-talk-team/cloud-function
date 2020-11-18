@@ -24,7 +24,7 @@ exports.sendEmailConfirmation = functions.firestore.document('/users/{userId}/se
 });
 
 // get the results from a conversation after it finishes
-exports.conversationResults = functions.firestore.document('/chats/{chatId}/results/{resultId}').onCreate(async (snap, context) => {
+exports.conversationResults = functions.firestore.document('/discoveries/{chatId}/results/{resultId}').onCreate(async (snap, context) => {
   await eventControllerObject.conversationResults(snap, context);
 })
 
