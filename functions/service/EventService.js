@@ -124,7 +124,7 @@ class EventService {
         badges_awarded: snapData.badges,
       };
 
-      await axios
+      axios
         .post(apiDashboard, body)
         .then((response) => console.log(response.data.data))
         .catch((error) => console.log(error));
@@ -174,8 +174,7 @@ class EventService {
         topics_hear: [topicSelected],
         topics_talk: userTopicsTalk,
       };
-
-      await axios
+      axios
         .post(apiMatchRequest, body)
         .then((response) => console.log(response.data.data))
         .catch((error) => console.log(error));

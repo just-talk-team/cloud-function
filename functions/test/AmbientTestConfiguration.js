@@ -2,6 +2,7 @@
 
 const json = require('../service-account-dev.json');
 const fs = require('fs');
+require('dotenv').config()
 
 json.private_key_id = process.env.CLOUD_PRIVATE_KEY_ID;
 json.private_key = process.env.CLOUD_PRIVATE_KEY;
@@ -22,9 +23,9 @@ fs.writeFileSync('./service-account-dev.json', data, (err) => {
 
 // defining test environment
 const test = require('firebase-functions-test')({
-    databaseURL: 'https://just-talk-dev.firebaseio.com',
-    storageBucket: 'just-talk-dev.appspot.com',
-    projectId: 'just-talk-dev',
+    databaseURL: 'https://just-talk-development.firebaseio.com',
+    storageBucket: 'just-talk-development.appspot.com',
+    projectId: 'just-talk-development',
 }, './service-account-dev.json');
 
 test.mockConfig(

@@ -1,6 +1,6 @@
 {
   "projects": {
     "default": "just-talk-2021",
-    "development": "just-talk-dev"
+    "development": "just-talk-development"
   }
 }
