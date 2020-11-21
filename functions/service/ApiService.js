@@ -49,7 +49,6 @@ class ApiService {
                 idDiscovery = `${idFirstPerson}_${idSecondPerson}`
             } else {
                 idDiscovery = `${idSecondPerson}_${idFirstPerson}`
-    
             }
 
             const pathToFirstPerson = `/users/${idFirstPerson}/discoveries/${idDiscovery}`;

@@ -35,7 +35,8 @@ describe("EventService", async function() {
         }
         const context = {
             'params': {
-                'chatId': '2644mam0AFWcOOWpvc0QuoIOXv72_1kimc79FxJp4v5xLgy4D'
+                'chatId': '2644mam0AFWcOOWpvc0QuoIOXv72_1kimc79FxJp4v5xLgy4D',
+                'resultId': '1kimc79FxJp4v5xLgy4D'
             }
         }
         const functionResult = await eventServiceObject.conversationResults(snap, context);

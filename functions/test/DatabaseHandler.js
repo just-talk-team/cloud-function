@@ -36,7 +36,7 @@ describe("DatabaseHandler", async function() {
     it(`Escenario: Cuando se desee obtener los documentos de un usuario`, async function() {
         const collection = 'segments';
         const userId = '2644mam0AFWcOOWpvc0QuoIOXv72';
-        const userDocumentQueryResult = await databaseHandler.getFromUser(collection, userId);
+        const userDocumentQueryResult = await databaseHandler.getListIdDocumentsOfCollectionInUser(collection, userId);
         assert.notStrictEqual(userDocumentQueryResult, -1, `No se obtuvieron los documentos correctamente`)
     });
     admin.app().delete();
