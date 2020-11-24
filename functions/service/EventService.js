@@ -37,7 +37,7 @@ class EventService {
         to: email,
       };
       mailOptions.subject = "¡Felicidades! Has agregado un nuevo segmento";
-      mailOptions.text = `Acabas de añadir un nuevo segmento en tu cuenta de Just Talk. Por favor, verifica tu correo electrónico para completar la configuración: ${confirmationUrl}`;
+      mailOptions.html = `Acabas de añadir un nuevo segmento en tu cuenta de Just Talk. Por favor, verifica tu correo electrónico dando click <a href="${confirmationUrl}">Aquí</a>`;
 
       // send the email
       await this.mailHandler.sendMail(mailOptions);
