@@ -27,8 +27,8 @@ describe("EventService", async function() {
         const snap = {
             'data': function() {
                 return { 
-                    'start_time': new Date(),
-                    'end_time': new Date(),
+                    'start_time': {"_seconds":1606525150,"_nanoseconds":788000000},
+                    'end_time': {"_seconds":1606598546,"_nanoseconds":601200000},
                     'badges': ['funny', 'good_talker']
                 }
             }

@@ -107,26 +107,33 @@ class EventService {
         qualifiedId
       );
 
+      const birthdate_parsed = new Date(user.birthdate._seconds * 1000 + user.birthdate._nanoseconds * 0.000001)
+      const birthdate_parsed_qualified = new Date(qualified.birthdate._seconds * 1000 + qualified.birthdate._nanoseconds * 0.000001)
+      const start_time_parsed = new Date(snapData.start_time._seconds * 1000 + snapData.start_time._nanoseconds * 0.000001)
+      const end_time_parsed = new Date(snapData.end_time._seconds * 1000 + snapData.end_time._nanoseconds * 0.000001)
+
       const apiDashboard = functions.config().apis.api_dashboard;
       const body = {
         user_type: user.user_type,
-        birthdate: user.birthdate,
+        birthdate: birthdate_parsed,
+        gender: user.gender,
         topics_hear: userTopicsHear,
         topics_talk: userTopicsTalk,
         segments: userSegments,
-        user_type_qualified: qualified.user_type,
-        birthdate_qualified: qualified.birthdate,
-        topics_talk_qualified: qualifiedTopicsTalk,
-        topics_hear_qualified: qualifiedTopicsHear,
-        segments_qualified: qualifiedSegments,
-        start_time: snapData.start_time,
-        end_time: snapData.end_time,
+        user_type_qualified_user: qualified.user_type,
+        birthdate_qualified_user: birthdate_parsed_qualified,
+        gender_qualified_user: qualified.gender,
+        topics_talk_qualified_user: qualifiedTopicsTalk,
+        topics_hear_qualified_user: qualifiedTopicsHear,
+        segments_qualified_user: qualifiedSegments,
+        start_time: start_time_parsed,
+        end_time: end_time_parsed,
         badges_awarded: snapData.badges,
       };
 
       axios
         .post(apiDashboard, body)
-        .then((response) => console.log(response.data.data))
+        .then((response) => console.log('Results', response))
         .catch((error) => console.log(error));
       return 1;
     } catch (error) {
@@ -176,7 +183,7 @@ class EventService {
       };
       axios
         .post(apiMatchRequest, body)
-        .then((response) => console.log(response.data.data))
+        .then((response) => console.log('Match request', response))
         .catch((error) => console.log(error));
       return 1;
     } catch (error) {
