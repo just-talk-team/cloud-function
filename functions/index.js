@@ -8,6 +8,7 @@ const eventController = require('./controller/EventController');
 
 // initialize the app
 admin.initializeApp();
+const db = admin.firestore();
 
 // initialize service
 const apiControllerObject = new apiController();
@@ -42,3 +43,69 @@ exports.matchRequest = functions.firestore.document('/users/{userId}/topics_hear
 exports.registerDiscovery = functions.https.onRequest(async (request, response) => {
   await apiControllerObject.registerDiscovery(request, response);
 })
+
+//Add documents job
+exports.scheduleFunctionAddDoc =  functions.pubsub.schedule('*/30 * * * *')
+    .timeZone('America/New_York')
+    .onRun((context) => {
+        var today = new Date();
+        var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+        var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+        var dateTime = date+' '+time;
+        admin.firestore().collection('sheduled-messages').add({original: dateTime});
+        return null;
+    })
+
+//Delete collection job
+exports.scheduleFunctionDeleteDoc = functions.pubsub.schedule('0 0 * * *')
+.timeZone('America/New_York')
+.onRun((context) => {
+    //admin.initializeApp();
+    var promises = [];
+
+    deleteCollection(db,'sheduled-messages',100);
+    return null;
+})
+
+
+function deleteCollection(db, collectionPath, batchSize) {
+    let collectionRef = db.collection(collectionPath);
+    let query = collectionRef.orderBy('__name__').limit(batchSize);
+    
+    return new Promise((resolve, reject) => {
+        deleteQueryBatch(db, query, batchSize, resolve, reject);
+    });
+    }
+    
+    function deleteQueryBatch(db, query, batchSize, resolve, reject) {
+    query.get()
+        .then((snapshot) => {
+        // When there are no documents left, we are done
+        if (snapshot.size == 0) {
+            return 0;
+        }
+    
+        // Delete documents in a batch
+        let batch = db.batch();
+        snapshot.docs.forEach((doc) => {
+            batch.delete(doc.ref);
+        });
+    
+        return batch.commit().then(() => {
+            return snapshot.size;
+        });
+        }).then((numDeleted) => {
+        if (numDeleted === 0) {
+            resolve();
+            return;
+        }
+    
+        // Recurse on the next process tick, to avoid
+        // exploding the stack.
+        process.nextTick(() => {
+            deleteQueryBatch(db, query, batchSize, resolve, reject);
+        });
+        })
+        .catch(reject);
+    }
+   
